@@ -25,17 +25,24 @@ module Enumerable
   end
 
   def my_any?
+    if !block_given?
+      return true if self.my_count != 0
+    end
+
     self.my_each do |element|
       return true if yield(element)
     end
     return false
   end
 
-  def my_none?
-    self.my_each do |element|
-      return false if yield(element)
-    end
-    return true
+  def my_none?(&block)
+
+    !self.my_any?(&block)
+
+    # self.my_each do |element|
+    #   return false if yield(element)
+    # end
+    # return true
   end
 
   def my_count
